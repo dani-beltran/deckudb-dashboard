@@ -1,15 +1,15 @@
-import { useState } from 'react';
-import JobList from './JobList';
-import { sampleJobs } from '../data/sampleJobs';
-import { Job } from '../types';
-import './Dashboard.css';
+import { useState } from 'react'
+import { sampleJobs } from '../data/sampleJobs'
+import type { Job } from '../types'
+import JobList from './JobList'
+import './Dashboard.css'
 
 function Dashboard() {
-  const [jobs] = useState<Job[]>(sampleJobs);
+  const [jobs] = useState<Job[]>(sampleJobs)
 
-  const runningJobs = jobs.filter(job => job.status === 'running');
-  const queuedJobs = jobs.filter(job => job.status === 'queued');
-  const completedJobs = jobs.filter(job => job.status === 'completed');
+  const runningJobs = jobs.filter((job) => job.status === 'running')
+  const queuedJobs = jobs.filter((job) => job.status === 'queued')
+  const completedJobs = jobs.filter((job) => job.status === 'completed')
 
   return (
     <div className="dashboard">
@@ -37,7 +37,7 @@ function Dashboard() {
         <JobList title="Completed" jobs={completedJobs} status="completed" />
       </div>
     </div>
-  );
+  )
 }
 
-export default Dashboard;
+export default Dashboard

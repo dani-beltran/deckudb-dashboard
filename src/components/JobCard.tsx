@@ -1,33 +1,33 @@
-import { Job, JobStatus, JobType } from '../types';
-import './JobCard.css';
+import type { Job, JobStatus, JobType } from '../types'
+import './JobCard.css'
 
 interface JobCardProps {
-  job: Job;
+  job: Job
 }
 
 function JobCard({ job }: JobCardProps) {
   const getStatusIcon = (status: JobStatus): string => {
     switch (status) {
       case 'running':
-        return '⚙️';
+        return '⚙️'
       case 'queued':
-        return '⏳';
+        return '⏳'
       case 'completed':
-        return '✓';
+        return '✓'
       default:
-        return '•';
+        return '•'
     }
-  };
+  }
 
   const getTypeIcon = (type: JobType): string => {
-    return type === 'scrape_game' ? '🕷️' : '🎮';
-  };
+    return type === 'scrape_game' ? '🕷️' : '🎮'
+  }
 
   const formatTime = (timestamp?: string): string => {
-    if (!timestamp) return '';
-    const date = new Date(timestamp);
-    return date.toLocaleTimeString();
-  };
+    if (!timestamp) return ''
+    const date = new Date(timestamp)
+    return date.toLocaleTimeString()
+  }
 
   return (
     <div className={`job-card ${job.status}`}>
@@ -36,24 +36,19 @@ function JobCard({ job }: JobCardProps) {
           {getTypeIcon(job.type)}
         </span>
         <span className="job-name">{job.name}</span>
-        <span className="job-status-icon">
-          {getStatusIcon(job.status)}
-        </span>
+        <span className="job-status-icon">{getStatusIcon(job.status)}</span>
       </div>
-      
+
       <div className="job-details">
         <div className="game-name">{job.gameName}</div>
-        
+
         {job.status === 'running' && job.progress && (
           <div className="progress-bar">
-            <div 
-              className="progress-fill" 
-              style={{ width: `${job.progress}%` }}
-            />
+            <div className="progress-fill" style={{ width: `${job.progress}%` }} />
             <span className="progress-text">{job.progress}%</span>
           </div>
         )}
-        
+
         <div className="job-meta">
           {job.status === 'running' && (
             <span className="meta-item">Started: {formatTime(job.startedAt)}</span>
@@ -70,7 +65,7 @@ function JobCard({ job }: JobCardProps) {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default JobCard;
+export default JobCard

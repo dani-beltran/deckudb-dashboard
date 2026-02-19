@@ -1,11 +1,11 @@
-import { Job, JobStatus } from '../types';
-import JobCard from './JobCard';
-import './JobList.css';
+import type { Job, JobStatus } from '../types'
+import JobCard from './JobCard'
+import './JobList.css'
 
 interface JobListProps {
-  title: string;
-  jobs: Job[];
-  status: JobStatus;
+  title: string
+  jobs: Job[]
+  status: JobStatus
 }
 
 function JobList({ title, jobs, status }: JobListProps) {
@@ -18,13 +18,11 @@ function JobList({ title, jobs, status }: JobListProps) {
         {jobs.length === 0 ? (
           <p className="empty-message">No {title.toLowerCase()} jobs</p>
         ) : (
-          jobs.map(job => (
-            <JobCard key={job.id} job={job} />
-          ))
+          jobs.map((job) => <JobCard key={job.id} job={job} />)
         )}
       </div>
     </div>
-  );
+  )
 }
 
-export default JobList;
+export default JobList
