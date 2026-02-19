@@ -1,0 +1,11 @@
+.app {
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, #f0f4f8, #e2e8f0);
+}
+
+#root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+

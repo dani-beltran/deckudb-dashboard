@@ -1,0 +1,94 @@
+.job-card {
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  border-left: 4px solid;
+}
+
+.job-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.job-card.running {
+  border-left-color: #3b82f6;
+}
+
+.job-card.queued {
+  border-left-color: #f59e0b;
+}
+
+.job-card.completed {
+  border-left-color: #10b981;
+}
+
+.job-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.job-type-icon {
+  font-size: 1.25rem;
+}
+
+.job-name {
+  font-weight: 600;
+  color: #374151;
+  flex: 1;
+}
+
+.job-status-icon {
+  font-size: 1.25rem;
+}
+
+.job-details {
+  margin-top: 0.5rem;
+}
+
+.game-name {
+  font-size: 1rem;
+  color: #1f2937;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+}
+
+.progress-bar {
+  position: relative;
+  height: 24px;
+  background: #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 0.75rem;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%);
+  transition: width 0.3s ease;
+  border-radius: 12px;
+}
+
+.progress-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.job-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.meta-item {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
