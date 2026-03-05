@@ -1,16 +1,52 @@
-import { useState } from 'react'
-import { sampleJobs } from '../data/sampleJobs'
+import { useEffect, useState } from 'react'
+import { fetchJobs } from '../services/api'
 import type { Job } from '../types'
 import JobTable from './JobTable'
 import './Dashboard.css'
 
 function Dashboard() {
-  const [jobs] = useState<Job[]>(sampleJobs)
+  const [jobs, setJobs] = useState<Job[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    let cancelled = false
+
+    async function loadJobs() {
+      try {
+        setLoading(true)
+        setError(null)
+        const response = await fetchJobs()
+        if (!cancelled) {
+          setJobs(response.data)
+        }
+      } catch (err) {
+        if (!cancelled) {
+          setError(err instanceof Error ? err.message : 'Failed to load jobs')
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false)
+        }
+      }
+    }
+
+    loadJobs()
+    return () => { cancelled = true }
+  }, [])
 
   const inProgressJobs = jobs.filter((job) => job.status === 'in_progress')
   const queuedJobs = jobs.filter((job) => job.status === 'queued')
   const completedJobs = jobs.filter((job) => job.status === 'completed')
   const failedJobs = jobs.filter((job) => job.status === 'failed')
+
+  if (loading) {
+    return <div className="dashboard-loading">Loading jobs...</div>
+  }
+
+  if (error) {
+    return <div className="dashboard-error">Error: {error}</div>
+  }
 
   return (
     <div className="dashboard">
