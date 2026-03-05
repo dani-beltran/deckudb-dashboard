@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react'
 import type { Job, JobStatus } from '../types'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip'
 import './JobTable.css'
 
 interface JobTableProps {
@@ -140,9 +141,14 @@ function JobTable({ jobs }: JobTableProps) {
                       {STATUS_LABELS[job.status]}
                     </span>
                     {job.status === 'failed' && job.error_message && (
-                      <span className="error-tooltip" title={job.error_message}>
-                        ⚠
-                      </span>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <span className="error-tooltip">⚠</span>
+                          </TooltipTrigger>
+                          <TooltipContent>{job.error_message}</TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     )}
                   </td>
                   <td className="col-date">{formatDate(job.started_at)}</td>
