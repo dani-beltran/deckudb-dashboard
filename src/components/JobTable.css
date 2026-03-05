@@ -1,0 +1,239 @@
+/* ── Container ─────────────────────────────────────────── */
+.job-table-container {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+}
+
+/* ── Toolbar ────────────────────────────────────────────── */
+.job-table-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.job-table-search {
+  flex: 1 1 220px;
+  padding: 0.55rem 0.9rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.job-table-search:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+}
+
+.job-table-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.filter-btn {
+  padding: 0.45rem 0.9rem;
+  border: 1px solid #d1d5db;
+  border-radius: 20px;
+  background: #f9fafb;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  color: #374151;
+}
+
+.filter-btn:hover {
+  background: #f3f4f6;
+}
+
+.filter-btn.active {
+  background: #667eea;
+  border-color: #667eea;
+  color: #fff;
+}
+
+.filter-btn.active.queued {
+  background: #f59e0b;
+  border-color: #f59e0b;
+}
+
+.filter-btn.active.in_progress {
+  background: #3b82f6;
+  border-color: #3b82f6;
+}
+
+.filter-btn.active.completed {
+  background: #10b981;
+  border-color: #10b981;
+}
+
+.filter-btn.active.failed {
+  background: #ef4444;
+  border-color: #ef4444;
+}
+
+/* ── Table wrapper (horizontal scroll) ─────────────────── */
+.job-table-wrapper {
+  overflow-x: auto;
+}
+
+/* ── Table ──────────────────────────────────────────────── */
+.job-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.job-table thead tr {
+  background: #f3f4f6;
+}
+
+.job-table th {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+  color: #374151;
+  white-space: nowrap;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.job-table th.sortable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.job-table th.sortable:hover {
+  background: #e9eaf0;
+}
+
+.sort-icon {
+  font-size: 0.8rem;
+  margin-left: 0.25rem;
+  color: #667eea;
+}
+
+.job-table tbody tr {
+  border-bottom: 1px solid #f3f4f6;
+  transition: background 0.15s;
+}
+
+.job-table tbody tr:hover {
+  background: #fafafa;
+}
+
+.job-table td {
+  padding: 0.75rem 1rem;
+  color: #374151;
+  vertical-align: middle;
+}
+
+/* ── Column-specific ────────────────────────────────────── */
+.col-id {
+  font-family: monospace;
+  color: #6b7280;
+  font-size: 0.8rem;
+}
+
+.col-date {
+  white-space: nowrap;
+  color: #6b7280;
+  font-size: 0.8rem;
+}
+
+/* ── Status badges ──────────────────────────────────────── */
+.status-badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.status-badge.queued {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status-badge.in_progress {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.status-badge.completed {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.status-badge.failed {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* ── Row left-border accent ─────────────────────────────── */
+.job-row.status-in_progress {
+  border-left: 3px solid #3b82f6;
+}
+
+.job-row.status-queued {
+  border-left: 3px solid #f59e0b;
+}
+
+.job-row.status-completed {
+  border-left: 3px solid #10b981;
+}
+
+.job-row.status-failed {
+  border-left: 3px solid #ef4444;
+}
+
+/* ── Type badges ────────────────────────────────────────── */
+.type-badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.type-badge.scrape {
+  background: #ede9fe;
+  color: #5b21b6;
+}
+
+.type-badge.generate {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+/* ── Error tooltip icon ─────────────────────────────────── */
+.error-tooltip {
+  margin-left: 0.4rem;
+  color: #ef4444;
+  cursor: help;
+  font-size: 0.85rem;
+}
+
+/* ── Empty state ────────────────────────────────────────── */
+.empty-row {
+  text-align: center;
+  padding: 2rem !important;
+  color: #9ca3af;
+  font-style: italic;
+}
+
+/* ── Count ──────────────────────────────────────────────── */
+.job-table-count {
+  margin-top: 0.75rem;
+  font-size: 0.8rem;
+  color: #9ca3af;
+  text-align: right;
+}
