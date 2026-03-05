@@ -229,11 +229,7 @@
   color: #9ca3af;
   font-style: italic;
 }
-
-/* ── Count ──────────────────────────────────────────────── */
-.job-table-count {
-  margin-top: 0.75rem;
-  font-size: 0.8rem;
-  color: #9ca3af;
-  text-align: right;
+.page-size-select:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
 }

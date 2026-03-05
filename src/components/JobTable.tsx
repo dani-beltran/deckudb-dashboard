@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react'
 import type { Job, JobStatus } from '../types'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip'
+import TablePagination from './TablePagination'
 import './JobTable.css'
 
 interface JobTableProps {
@@ -37,6 +38,8 @@ function JobTable({ jobs }: JobTableProps) {
   const [search, setSearch] = useState('')
   const [filterStatus, setFilterStatus] = useState<FilterStatus>(STATUS_ALL)
   const [sortDir, setSortDir] = useState<SortDirection>('desc')
+  const [currentPage, setCurrentPage] = useState(1)
+  const [pageSize, setPageSize] = useState(25)
 
   const filtered = useMemo(() => {
     let result = jobs
@@ -59,8 +62,35 @@ function JobTable({ jobs }: JobTableProps) {
     return result
   }, [jobs, search, filterStatus, sortDir])
 
-  const toggleSort = () =>
+  const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize))
+  const safePage = Math.min(currentPage, totalPages)
+
+  const paginated = useMemo(() => {
+    const start = (safePage - 1) * pageSize
+    return filtered.slice(start, start + pageSize)
+  }, [filtered, safePage, pageSize])
+
+  const goToPage = (page: number) => setCurrentPage(Math.max(1, Math.min(page, totalPages)))
+
+  const handlePageSizeChange = (size: number) => {
+    setPageSize(size)
+    setCurrentPage(1)
+  }
+
+  const handleFilterChange = (s: FilterStatus) => {
+    setFilterStatus(s)
+    setCurrentPage(1)
+  }
+
+  const handleSearchChange = (value: string) => {
+    setSearch(value)
+    setCurrentPage(1)
+  }
+
+  const toggleSort = () => {
     setSortDir((prev) => (prev === 'desc' ? 'asc' : 'desc'))
+    setCurrentPage(1)
+  }
 
   const filterOptions: FilterStatus[] = [
     STATUS_ALL,
@@ -78,7 +108,7 @@ function JobTable({ jobs }: JobTableProps) {
           type="text"
           placeholder="Search by game name…"
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => handleSearchChange(e.target.value)}
         />
 
         <div className="job-table-filters">
@@ -87,7 +117,7 @@ function JobTable({ jobs }: JobTableProps) {
               type="button"
               key={s}
               className={`filter-btn ${filterStatus === s ? 'active' : ''} ${s !== STATUS_ALL ? s : ''}`}
-              onClick={() => setFilterStatus(s)}
+              onClick={() => handleFilterChange(s)}
             >
               {s === STATUS_ALL ? 'All' : STATUS_LABELS[s as JobStatus]}
             </button>
@@ -118,14 +148,14 @@ function JobTable({ jobs }: JobTableProps) {
             </tr>
           </thead>
           <tbody>
-            {filtered.length === 0 ? (
+            {paginated.length === 0 ? (
               <tr>
                 <td colSpan={7} className="empty-row">
                   No jobs match the current filters.
                 </td>
               </tr>
             ) : (
-              filtered.map((job) => (
+              paginated.map((job) => (
                 <tr key={job.job_id} className={`job-row status-${job.status}`}>
                   <td className="col-id" title={job.job_id}>
                     {shortId(job.job_id)}
@@ -161,9 +191,14 @@ function JobTable({ jobs }: JobTableProps) {
         </table>
       </div>
 
-      <p className="job-table-count">
-        Showing {filtered.length} of {jobs.length} jobs
-      </p>
+      <TablePagination
+        currentPage={safePage}
+        totalPages={totalPages}
+        pageSize={pageSize}
+        totalItems={filtered.length}
+        onPageChange={goToPage}
+        onPageSizeChange={handlePageSizeChange}
+      />
     </div>
   )
 }
